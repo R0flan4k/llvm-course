@@ -1,0 +1,5 @@
+---
+Checks: '-*'
+FormatStyle: LLVM
+HeaderFilterRegex: '.*'
+---
