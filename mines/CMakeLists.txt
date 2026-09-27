@@ -20,18 +20,18 @@ set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/lib)
 
 # LLVM IR and bytecode generation (into build/Release)
 add_custom_target(ir
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/mines.c -o ${GEN_DIR}/mines.ll
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/sim.c -o ${GEN_DIR}/sim.ll
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/render.c -o ${GEN_DIR}/render.ll
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/mines.c -o ${GEN_DIR}/mines.ll
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/sim.c -o ${GEN_DIR}/sim.ll
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -emit-llvm -S ${SOURCES_DIR}/render.c -o ${GEN_DIR}/render.ll
   COMMAND llvm-link ${GEN_DIR}/mines.ll ${GEN_DIR}/sim.ll ${GEN_DIR}/render.ll -o ${GEN_DIR}/full.bc
   COMMENT "Generating LLVM IR into ${GEN_DIR}"
   USES_TERMINAL)
 
 # Assembly generation (into build/Release)
 add_custom_target(asm
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/mines.c -o ${GEN_DIR}/mines.s
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/sim.c -o ${GEN_DIR}/sim.s
-  COMMAND clang -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/render.c -o ${GEN_DIR}/render.s
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/mines.c -o ${GEN_DIR}/mines.s
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/sim.c -o ${GEN_DIR}/sim.s
+  COMMAND clang -O2 -I${CMAKE_SOURCE_DIR}/include -S ${SOURCES_DIR}/render.c -o ${GEN_DIR}/render.s
   COMMENT "Generating assembly into ${GEN_DIR}"
   USES_TERMINAL)
 
