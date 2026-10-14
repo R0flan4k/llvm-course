@@ -4,13 +4,9 @@
 
 #include <stdint.h>
 
-static int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH];
-static int64_t FieldState[FIELD_HEIGHT][FIELD_WIDTH];
-static int64_t FieldNeighbors[FIELD_HEIGHT][FIELD_WIDTH];
-
-static int64_t GameOver = 0;
-
-static void generateField(void) {
+static void generateField(int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH],
+                          int64_t FieldState[FIELD_HEIGHT][FIELD_WIDTH],
+                          int64_t FieldNeighbors[FIELD_HEIGHT][FIELD_WIDTH]) {
   for (int64_t y = 0; y < FIELD_HEIGHT; ++y) {
     for (int64_t x = 0; x < FIELD_WIDTH; ++x) {
       FieldType[y][x] = (simRand() % 100) < MINE_PROBABILITY ? CELL_TYPE_MINE
@@ -21,7 +17,8 @@ static void generateField(void) {
   }
 }
 
-static int64_t countNeighbors(int64_t cx, int64_t cy) {
+static int64_t countNeighbors(int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH],
+                              int64_t cx, int64_t cy) {
   int64_t count = 0;
   for (int64_t dy = -1; dy <= 1; ++dy) {
     for (int64_t dx = -1; dx <= 1; ++dx) {
@@ -37,16 +34,19 @@ static int64_t countNeighbors(int64_t cx, int64_t cy) {
   return count;
 }
 
-static void openCell(int64_t x, int64_t y) {
+static void openCell(int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH],
+                     int64_t FieldState[FIELD_HEIGHT][FIELD_WIDTH],
+                     int64_t FieldNeighbors[FIELD_HEIGHT][FIELD_WIDTH],
+                     int64_t *GameOver, int64_t x, int64_t y) {
   if (FieldState[y][x] != CELL_STATE_IDLE)
     return;
   if (FieldType[y][x] == CELL_TYPE_MINE) {
     FieldState[y][x] = CELL_STATE_MINE;
-    GameOver = 1;
+    *GameOver = 1;
     return;
   }
   FieldState[y][x] = CELL_STATE_OPENED;
-  FieldNeighbors[y][x] = countNeighbors(x, y);
+  FieldNeighbors[y][x] = countNeighbors(FieldType, x, y);
   if (FieldNeighbors[y][x] == 0) {
     for (int64_t dy = -1; dy <= 1; ++dy) {
       for (int64_t dx = -1; dx <= 1; ++dx) {
@@ -55,14 +55,17 @@ static void openCell(int64_t x, int64_t y) {
         int64_t nx = x + dx;
         int64_t ny = y + dy;
         if (0 <= nx && nx < FIELD_WIDTH && 0 <= ny && ny < FIELD_HEIGHT)
-          openCell(nx, ny);
+          openCell(FieldType, FieldState, FieldNeighbors, GameOver, nx, ny);
       }
     }
   }
 }
 
-static void handleClick(void) {
-  if (GameOver)
+static void handleClick(int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH],
+                        int64_t FieldState[FIELD_HEIGHT][FIELD_WIDTH],
+                        int64_t FieldNeighbors[FIELD_HEIGHT][FIELD_WIDTH],
+                        int64_t *GameOver) {
+  if (*GameOver)
     return;
   int64_t x, y;
   int64_t click = simPollClick(&x, &y);
@@ -75,7 +78,7 @@ static void handleClick(void) {
 
   if (click == SIM_CLICK_LEFT) {
     if (FieldState[cy][cx] == CELL_STATE_IDLE)
-      openCell(cx, cy);
+      openCell(FieldType, FieldState, FieldNeighbors, GameOver, cx, cy);
   } else if (click == SIM_CLICK_RIGHT) {
     if (FieldState[cy][cx] == CELL_STATE_IDLE)
       FieldState[cy][cx] = CELL_STATE_MARKED;
@@ -85,13 +88,18 @@ static void handleClick(void) {
 }
 
 void app(void) {
-  generateField();
+  int64_t FieldType[FIELD_HEIGHT][FIELD_WIDTH];
+  int64_t FieldState[FIELD_HEIGHT][FIELD_WIDTH];
+  int64_t FieldNeighbors[FIELD_HEIGHT][FIELD_WIDTH];
+  int64_t GameOver = 0;
+
+  generateField(FieldType, FieldState, FieldNeighbors);
   while (1) {
     if (simHasQuit()) {
       simExit();
       return;
     }
-    handleClick();
+    handleClick(FieldType, FieldState, FieldNeighbors, &GameOver);
     renderField(FieldState, FieldNeighbors);
     simFlush();
   }
