@@ -1,0 +1,120 @@
+IR usage trace statistics (User <- Operand)
+app: mines, -O2
+records: 50055
+distinct records (window 1): 35
+
+== window size 1 ==
+patterns: 35 of 50055 (0.07%)
+    7616 times and <- icmp
+    3862 times icmp <- load
+    3839 times load <- getelementptr
+    3808 times br <- and
+    3530 times br <- icmp
+    3401 times getelementptr <- add
+    2685 times zext <- icmp
+    2677 times icmp <- add
+    2427 times add <- phi
+    2400 times getelementptr <- phi
+    2007 times add <- zext
+    1819 times call <- add
+    1816 times store <- getelementptr
+    1568 times call <- bitcast
+    1216 times getelementptr <- alloca
+     883 times call <- getelementptr
+     822 times icmp <- call
+     787 times call <- alloca
+     737 times icmp <- phi
+     456 times load <- alloca
+
+== window size 2 ==
+patterns: 90 of 50054 (0.18%)
+    3836 times load <- getelementptr ; icmp <- load
+    3808 times and <- icmp ; and <- icmp
+    3808 times and <- icmp ; br <- and
+    2285 times br <- and ; getelementptr <- add
+    2285 times getelementptr <- add ; load <- getelementptr
+    2285 times icmp <- load ; zext <- icmp
+    2007 times zext <- icmp ; add <- zext
+    2007 times add <- zext ; add <- phi
+    1938 times icmp <- add ; and <- icmp
+    1551 times icmp <- load ; br <- icmp
+    1227 times br <- and ; call <- add
+    1227 times call <- add ; load <- getelementptr
+    1200 times getelementptr <- phi ; getelementptr <- phi
+    1200 times getelementptr <- phi ; getelementptr <- alloca
+    1200 times getelementptr <- alloca ; store <- getelementptr
+    1136 times add <- phi ; and <- icmp
+    1116 times getelementptr <- add ; getelementptr <- add
+    1011 times add <- phi ; icmp <- add
+     927 times br <- icmp ; icmp <- add
+     822 times icmp <- call ; br <- icmp
+
+== window size 3 ==
+patterns: 125 of 50053 (0.25%)
+    3808 times and <- icmp ; and <- icmp ; br <- and
+    2285 times and <- icmp ; br <- and ; getelementptr <- add
+    2285 times getelementptr <- add ; load <- getelementptr ; icmp <- load
+    2285 times load <- getelementptr ; icmp <- load ; zext <- icmp
+    2007 times icmp <- load ; zext <- icmp ; add <- zext
+    2007 times zext <- icmp ; add <- zext ; add <- phi
+    1938 times icmp <- add ; and <- icmp ; and <- icmp
+    1551 times load <- getelementptr ; icmp <- load ; br <- icmp
+    1227 times and <- icmp ; br <- and ; call <- add
+    1227 times call <- add ; load <- getelementptr ; icmp <- load
+    1200 times getelementptr <- phi ; getelementptr <- phi ; getelementptr <- alloca
+    1200 times getelementptr <- phi ; getelementptr <- alloca ; store <- getelementptr
+    1169 times br <- and ; getelementptr <- add ; load <- getelementptr
+    1136 times add <- zext ; add <- phi ; and <- icmp
+    1136 times add <- phi ; and <- icmp ; and <- icmp
+    1116 times br <- and ; getelementptr <- add ; getelementptr <- add
+    1116 times getelementptr <- add ; getelementptr <- add ; load <- getelementptr
+     927 times br <- icmp ; icmp <- add ; and <- icmp
+     777 times br <- icmp ; call <- bitcast ; call <- bitcast
+     660 times icmp <- load ; br <- icmp ; icmp <- add
+
+== window size 4 ==
+patterns: 155 of 50052 (0.31%)
+    2285 times and <- icmp ; and <- icmp ; br <- and ; getelementptr <- add
+    2285 times getelementptr <- add ; load <- getelementptr ; icmp <- load ; zext <- icmp
+    2007 times load <- getelementptr ; icmp <- load ; zext <- icmp ; add <- zext
+    2007 times icmp <- load ; zext <- icmp ; add <- zext ; add <- phi
+    1938 times icmp <- add ; and <- icmp ; and <- icmp ; br <- and
+    1227 times and <- icmp ; and <- icmp ; br <- and ; call <- add
+    1227 times call <- add ; load <- getelementptr ; icmp <- load ; br <- icmp
+    1200 times getelementptr <- phi ; getelementptr <- phi ; getelementptr <- alloca ; store <- getelementptr
+    1169 times and <- icmp ; br <- and ; getelementptr <- add ; load <- getelementptr
+    1169 times br <- and ; getelementptr <- add ; load <- getelementptr ; icmp <- load
+    1136 times zext <- icmp ; add <- zext ; add <- phi ; and <- icmp
+    1136 times add <- zext ; add <- phi ; and <- icmp ; and <- icmp
+    1136 times add <- phi ; and <- icmp ; and <- icmp ; br <- and
+    1116 times and <- icmp ; br <- and ; getelementptr <- add ; getelementptr <- add
+    1116 times br <- and ; getelementptr <- add ; getelementptr <- add ; load <- getelementptr
+    1116 times getelementptr <- add ; getelementptr <- add ; load <- getelementptr ; icmp <- load
+     927 times br <- icmp ; icmp <- add ; and <- icmp ; and <- icmp
+     660 times load <- getelementptr ; icmp <- load ; br <- icmp ; icmp <- add
+     660 times icmp <- load ; br <- icmp ; icmp <- add ; and <- icmp
+     635 times and <- icmp ; br <- and ; call <- add ; load <- getelementptr
+
+== window size 5 ==
+patterns: 189 of 50051 (0.38%)
+    2007 times getelementptr <- add ; load <- getelementptr ; icmp <- load ; zext <- icmp ; add <- zext
+    2007 times load <- getelementptr ; icmp <- load ; zext <- icmp ; add <- zext ; add <- phi
+    1169 times and <- icmp ; and <- icmp ; br <- and ; getelementptr <- add ; load <- getelementptr
+    1169 times and <- icmp ; br <- and ; getelementptr <- add ; load <- getelementptr ; icmp <- load
+    1169 times br <- and ; getelementptr <- add ; load <- getelementptr ; icmp <- load ; zext <- icmp
+    1136 times icmp <- load ; zext <- icmp ; add <- zext ; add <- phi ; and <- icmp
+    1136 times zext <- icmp ; add <- zext ; add <- phi ; and <- icmp ; and <- icmp
+    1136 times add <- zext ; add <- phi ; and <- icmp ; and <- icmp ; br <- and
+    1116 times and <- icmp ; and <- icmp ; br <- and ; getelementptr <- add ; getelementptr <- add
+    1116 times and <- icmp ; br <- and ; getelementptr <- add ; getelementptr <- add ; load <- getelementptr
+    1116 times br <- and ; getelementptr <- add ; getelementptr <- add ; load <- getelementptr ; icmp <- load
+    1116 times getelementptr <- add ; getelementptr <- add ; load <- getelementptr ; icmp <- load ; zext <- icmp
+    1096 times add <- phi ; and <- icmp ; and <- icmp ; br <- and ; getelementptr <- add
+     927 times br <- icmp ; icmp <- add ; and <- icmp ; and <- icmp ; br <- and
+     913 times icmp <- add ; and <- icmp ; and <- icmp ; br <- and ; call <- add
+     836 times icmp <- add ; and <- icmp ; and <- icmp ; br <- and ; getelementptr <- add
+     660 times call <- add ; load <- getelementptr ; icmp <- load ; br <- icmp ; icmp <- add
+     660 times load <- getelementptr ; icmp <- load ; br <- icmp ; icmp <- add ; and <- icmp
+     660 times icmp <- load ; br <- icmp ; icmp <- add ; and <- icmp ; and <- icmp
+     635 times and <- icmp ; and <- icmp ; br <- and ; call <- add ; load <- getelementptr
+
